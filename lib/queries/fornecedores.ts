@@ -2,14 +2,7 @@ import { createClient } from '@/lib/supabase/client';
 import type { Fornecedor } from '@/types';
 
 export async function getFornecedores(apenasAtivos = false) {
-  if (process.env.NEXT_PUBLIC_SUPABASE_URL?.includes('SEU_PROJETO')) {
-    const { mockFornecedores } = await import('@/lib/mock-data');
-    let resultado = mockFornecedores;
-    if (apenasAtivos) {
-      resultado = resultado.filter(f => f.ativo);
-    }
-    return resultado;
-  }
+
 
   const supabase = createClient();
   let query = supabase
@@ -70,10 +63,7 @@ export async function excluirFornecedor(id: string) {
 }
 
 export async function contarPrecosDoFornecedor(fornecedorId: string): Promise<number> {
-  if (process.env.NEXT_PUBLIC_SUPABASE_URL?.includes('SEU_PROJETO')) {
-    const { mockPrecos } = await import('@/lib/mock-data');
-    return mockPrecos.filter(p => p.fornecedor_id === fornecedorId).length;
-  }
+
 
   const supabase = createClient();
   const { count, error } = await supabase

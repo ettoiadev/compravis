@@ -2,10 +2,7 @@ import { createClient } from '@/lib/supabase/client';
 import type { Produto, Categoria } from '@/types';
 
 export async function getCategorias() {
-  if (process.env.NEXT_PUBLIC_SUPABASE_URL?.includes('SEU_PROJETO')) {
-    const { mockCategorias } = await import('@/lib/mock-data');
-    return mockCategorias;
-  }
+
 
   const supabase = createClient();
   const { data, error } = await supabase
@@ -49,17 +46,7 @@ export async function excluirCategoria(id: string) {
 }
 
 export async function getProdutos(filtros?: { categoria_id?: string; busca?: string; ativo?: boolean }) {
-  if (process.env.NEXT_PUBLIC_SUPABASE_URL?.includes('SEU_PROJETO')) {
-    const { mockProdutos } = await import('@/lib/mock-data');
-    let resultado = mockProdutos;
-    if (filtros?.categoria_id) resultado = resultado.filter(p => p.categoria_id === filtros.categoria_id);
-    if (filtros?.ativo !== undefined) resultado = resultado.filter(p => p.ativo === filtros.ativo);
-    if (filtros?.busca) {
-      const b = filtros.busca.toLowerCase();
-      resultado = resultado.filter(p => p.nome.toLowerCase().includes(b));
-    }
-    return resultado;
-  }
+
 
   const supabase = createClient();
   let query = supabase
@@ -94,10 +81,7 @@ export async function getProdutoById(id: string) {
 }
 
 export async function buscarProdutos(busca: string) {
-  if (process.env.NEXT_PUBLIC_SUPABASE_URL?.includes('SEU_PROJETO')) {
-    const { mockProdutos } = await import('@/lib/mock-data');
-    return mockProdutos.filter(p => p.nome.toLowerCase().includes(busca.toLowerCase()));
-  }
+
 
   const supabase = createClient();
   const { data, error } = await supabase
@@ -146,10 +130,7 @@ export async function excluirProduto(id: string) {
 }
 
 export async function contarFornecedoresDoProduto(produtoId: string): Promise<number> {
-  if (process.env.NEXT_PUBLIC_SUPABASE_URL?.includes('SEU_PROJETO')) {
-    const { mockPrecos } = await import('@/lib/mock-data');
-    return mockPrecos.filter(p => p.produto_id === produtoId).length;
-  }
+
 
   const supabase = createClient();
   const { count, error } = await supabase
